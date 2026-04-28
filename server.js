@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+let subscribers = [];
 app.use(express.urlencoded({ extended: false }));
 
 app.post("/webhook", (req, res) => {
@@ -11,7 +11,16 @@ app.post("/webhook", (req, res) => {
 
   if (message && message.toLowerCase() === "yes") {
     reply = "You are now subscribed. You will receive health alerts.";
+  if (message && message.toLowerCase() === "yes") {
+  const userNumber = req.body.From;
+
+  if (!subscribers.includes(userNumber)) {
+    subscribers.push(userNumber);
+    reply = "You are now subscribed to Climate Health Alerts.";
+  } else {
+    reply = "You are already subscribed.";
   }
+}
 
   const twiml = `
     <Response>
