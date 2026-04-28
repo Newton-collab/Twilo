@@ -4,6 +4,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 
 app.post("/webhook", (req, res) => {
+   console.log(req.body);
   const message = req.body.Body;
 
   let reply = "Welcome to Climate Health Alerts. Reply YES to subscribe.";
