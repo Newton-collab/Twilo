@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 let subscribers = [];
 app.use(express.urlencoded({ extended: false }));
-
 app.post("/webhook", (req, res) => {
    console.log(req.body);
   const message = req.body.Body;
