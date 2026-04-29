@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
+const API_KEY = "c0a14149323b3cf128454332720c730c";
 let subscribers = [];
 app.use(express.urlencoded({ extended: false }));
 
