@@ -16,6 +16,7 @@ app.post("/webhook", (req, res) => {
 
   if (!subscribers.includes(userNumber)) {
     subscribers.push(userNumber);
+     console.log(subscribers);
     reply = "You are now subscribed to Climate Health Alerts.";
   } else {
     reply = "You are already subscribed.";
