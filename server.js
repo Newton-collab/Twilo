@@ -51,7 +51,7 @@ app.post("/webhook", (req, res) => {
   }
 }
 }
-
+checkWeatherAndSendAlert();
   const twiml = `
     <Response>
       <Message>${reply}</Message>
