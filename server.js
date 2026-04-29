@@ -3,6 +3,32 @@ const app = express();
 const fetch = require("node-fetch");
 const API_KEY = "c0a14149323b3cf128454332720c730c";
 let subscribers = [];
+async function checkWeatherAndSendAlert() {
+  try {
+    const city = "Lagos"; // you can change this
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const temperature = data.main.temp;
+
+    console.log("Current temperature:", temperature);
+
+    if (temperature > 35) {
+      console.log("Heat alert triggered!");
+
+      subscribers.forEach((user) => {
+        console.log(`Send alert to ${user}`);
+        // we will send real messages next
+      });
+    }
+
+  } catch (error) {
+    console.error("Weather error:", error);
+  }
+}
 app.use(express.urlencoded({ extended: false }));
 
 app.post("/webhook", (req, res) => {
