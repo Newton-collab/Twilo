@@ -11,7 +11,7 @@ app.post("/webhook", (req, res) => {
 
   if (message && message.toLowerCase() === "yes") {
     reply = "You are now subscribed. You will receive health alerts.";
-  if (message && message.toLowerCase() === "yes") {
+ if (message && message.toLowerCase() === "yes") {
   const userNumber = req.body.From;
 
   if (!subscribers.includes(userNumber)) {
@@ -20,6 +20,7 @@ app.post("/webhook", (req, res) => {
   } else {
     reply = "You are already subscribed.";
   }
+}
 }
 
   const twiml = `
