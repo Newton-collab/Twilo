@@ -32,10 +32,13 @@ async function checkWeatherAndSendAlert() {
       from: "whatsapp:+14155238886",
       to: user
     })
-    .then(message => console.log("Alert sent:", message.sid))
-    .catch(error => console.error("Error sending message:", error));
+    .then((message) => {
+      console.log("Alert sent:", message.sid);
+    })
+    .catch((error) => {
+      console.error("Error sending message:", error);
+    });
 });
-      });
     }
 
   } catch (error) {
