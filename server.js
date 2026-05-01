@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
+const cron = require("node-cron");
 const API_KEY = "c0a14149323b3cf128454332720c730c";
 let subscribers = [];
 async function checkWeatherAndSendAlert() {
@@ -68,4 +69,8 @@ app.get("/", (req, res) => {
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running");
+});
+cron.schedule("*/1 * * * *", () => {
+  console.log("Running scheduled weather check...");
+  checkWeatherAndSendAlert();
 });
