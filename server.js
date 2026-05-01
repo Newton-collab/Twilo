@@ -2,6 +2,11 @@ const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
 const cron = require("node-cron");
+const twilio = require("twilio");
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.AUTH_TOKEN;
+
+const client = twilio(accountSid, authToken);
 const API_KEY = "c0a14149323b3cf128454332720c730c";
 let subscribers = [];
 async function checkWeatherAndSendAlert() {
@@ -21,8 +26,15 @@ async function checkWeatherAndSendAlert() {
       console.log("Heat alert triggered!");
 
       subscribers.forEach((user) => {
-        console.log(`Send alert to ${user}`);
-        // we will send real messages next
+  client.messages
+    .create({
+      body: "⚠️ Heat Alert: Temperature is above 35°C. Stay hydrated and avoid sun exposure.",
+      from: "whatsapp:+14155238886",
+      to: user
+    })
+    .then(message => console.log("Alert sent:", message.sid))
+    .catch(error => console.error("Error sending message:", error));
+});
       });
     }
 
