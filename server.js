@@ -19,7 +19,7 @@ async function checkWeatherAndSendAlert() {
     const data = await response.json();
 
     const temperature = data.main.temp;
-
+    console.log("Subscribers:", subscribers);
     console.log("Current temperature:", temperature);
 
     if (temperature > 20) {
