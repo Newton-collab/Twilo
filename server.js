@@ -22,7 +22,7 @@ async function checkWeatherAndSendAlert() {
 
     console.log("Current temperature:", temperature);
 
-    if (temperature > 35) {
+    if (temperature > 20) {
       console.log("Heat alert triggered!");
 
       subscribers.forEach((user) => {
