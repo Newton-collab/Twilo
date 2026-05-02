@@ -28,7 +28,7 @@ async function checkWeatherAndSendAlert() {
       subscribers.forEach((user) => {
   client.messages
     .create({
-      body: "⚠️ Heat Alert: It’s ${temperature}°C today. Please make sure children drink plenty of water, stay indoors during hot hours, and avoid too much sun.`,
+      body: `⚠️ Heat Alert: It’s ${temperature}°C today. Please make sure children drink plenty of water, stay indoors during hot hours, and avoid too much sun.`,
       from: "whatsapp:+14155238886",
       to: user
     })
