@@ -42,8 +42,7 @@ async function checkWeatherAndSendAlert() {
       console.error("Error sending message:", error);
     });
 });
-    }
-
+ }
   } catch (error) {
     console.error("Weather error:", error);
   }
