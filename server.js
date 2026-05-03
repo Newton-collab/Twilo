@@ -23,12 +23,14 @@ async function checkWeatherAndSendAlert() {
     console.log("Subscribers:", subscribers);
     console.log("Current temperature:", temperature);
 
-    if (temperature > 20) {
-      console.log("Heat alert triggered!");
+   if (alertType && lastAlertSent !== alertType) {
+  lastAlertSent = alertType;
 
-      subscribers.forEach((user) => {
-  client.messages
-    .create({
+  const message = getAlertMessage(alertType, alertValue);
+
+  subscribers.forEach((user) => {
+    client.messages
+      .create({
       body: `⚠️ Heat Alert: It’s ${temperature}°C today. Please make sure children drink plenty of water, stay indoors during hot hours, and avoid too much sun.`,
       from: "whatsapp:+14155238886",
       to: user
