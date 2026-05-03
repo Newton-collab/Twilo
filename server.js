@@ -84,7 +84,7 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running");
 });
-cron.schedule("*/1 * * * *", () => {
+cron.schedule("*/10 * * * *", () => {
   console.log("Running scheduled weather check...");
   checkWeatherAndSendAlert();
 });
