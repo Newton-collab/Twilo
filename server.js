@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
+let lastAlertSent = null;
 const cron = require("node-cron");
 const twilio = require("twilio");
 const accountSid = process.env.ACCOUNT_SID;
