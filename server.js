@@ -22,27 +22,32 @@ async function checkWeatherAndSendAlert() {
     const temperature = data.main.temp;
     console.log("Subscribers:", subscribers);
     console.log("Current temperature:", temperature);
+let alertType = null;
+let alertValue = null;
 
+// Heat condition
+if (temperature > 25) {
+  alertType = "heat";
+  alertValue = temperature;
+}
    if (alertType && lastAlertSent !== alertType) {
   lastAlertSent = alertType;
-
-  const message = getAlertMessage(alertType, alertValue);
 
   subscribers.forEach((user) => {
     client.messages
       .create({
-      body: `⚠️ Heat Alert: It’s ${temperature}°C today. Please make sure children drink plenty of water, stay indoors during hot hours, and avoid too much sun.`,
-      from: "whatsapp:+14155238886",
-      to: user
-    })
-    .then((message) => {
-      console.log("Alert sent:", message.sid);
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-    });
-});
- }
+        body: `⚠️ Heat Alert: It’s ${temperature}°C today. Please make sure children drink plenty of water, stay indoors during hot hours, and avoid too much sun.`,
+        from: "whatsapp:+14155238886",
+        to: user
+      })
+      .then((message) => {
+        console.log("Alert sent:", message.sid);
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
+      });
+  });
+}
   } catch (error) {
     console.error("Weather error:", error);
   }
@@ -50,25 +55,26 @@ async function checkWeatherAndSendAlert() {
 app.use(express.urlencoded({ extended: false }));
 
 app.post("/webhook", (req, res) => {
-   console.log(req.body);
-  const message = req.body.Body;
+  console.log(req.body);
 
+  const message = req.body.Body;
   let reply = "Welcome to Climate Health Alerts. Reply YES to subscribe.";
 
   if (message && message.toLowerCase() === "yes") {
-    reply = "You are now subscribed. You will receive health alerts.";
-  const userNumber = req.body.From;
+    const userNumber = req.body.From;
 
-  if (!subscribers.includes(userNumber)) {
-    subscribers.push(userNumber);
-     console.log(subscribers);
-    reply = "You are now subscribed to Climate Health Alerts.";
-  } else {
-    reply = "You are already subscribed.";
+    if (!subscribers.includes(userNumber)) {
+      subscribers.push(userNumber);
+      console.log(subscribers);
+      reply = "You are now subscribed to Climate Health Alerts.";
+    } else {
+      reply = "You are already subscribed.";
+    }
   }
-}
-}
-checkWeatherAndSendAlert();
+
+  // Run weather check
+  checkWeatherAndSendAlert();
+
   const twiml = `
     <Response>
       <Message>${reply}</Message>
