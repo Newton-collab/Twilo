@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
-let lastAlertSent = null;
+lastAlertSent = null;
 const cron = require("node-cron");
 const twilio = require("twilio");
 const accountSid = process.env.ACCOUNT_SID;
@@ -22,6 +22,7 @@ async function checkWeatherAndSendAlert() {
     const temperature = data.main.temp;
     console.log("Subscribers:", subscribers);
     console.log("Current temperature:", temperature);
+    console.log("Attempting to send alert...");
 let alertType = null;
 let alertValue = null;
 
